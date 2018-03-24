@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Place searches</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+
+    <button type="button" onclick="initMap()">Found Homeless? Click Here</button>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+        border: 3px solid blue;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        background-color: blue; /* Green */
+        padding: 0;
+        border: 1px;
+      }
+      button {
+          background-color: green; /* Green */
+          text-align: 300px;
+          border: 3px solid blue;
+          color: white;
+          width: 100%;
+          font-size: 16px;
+      }
+    </style>
+    <script>
+      // This example requires the Places library. Include the libraries=places
+      // parameter when you first load the API. For example:
+      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+
+      var map;
+      var infowindow;
+      var pos = {
+        lat: 0,
+        lng: 0
+      };
+
+      function initMap() {
+        var pyrmont = {lat: 20, lng: -30};
+
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 40, lng: -90},
+          zoom:5
+        });
+        map.setOptions({ minZoom: 3, maxZoom: 15 });
+        infoWindow = new google.maps.InfoWindow;
+
+        // Try HTML5 geolocation.
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+
+            infoWindow.setPosition(pos);
+            infoWindow.setContent('Current Location.');
+            var image = 'https://maps.google.com/mapfiles/kml/shapes/library_maps.png';
+            var marker = new google.maps.Marker({
+              position: pos,
+              // icon: {
+              //   path: google.maps.SymbolPath.CIRCLE,
+              //   scale: 5
+              // },
+              icon: image,
+              map: map
+            });
+
+            infoWindow.open(map);
+            map.setCenter(pos);
+
+            infowindow = new google.maps.InfoWindow();
+            var service = new google.maps.places.PlacesService(map);
+
+          }, function() {
+            handleLocationError(true, infoWindow, map.getCenter());
+          });
+        } else {
+          // Browser doesn't support Geolocation
+          handleLocationError(false, infoWindow, map.getCenter());
+        }
+
+      }
+
+      function createMarker(place) {
+        var placeLoc = place.geometry.location;
+        var marker = new google.maps.Marker({
+          map: map,
+          position: place.geometry.location
+        });
+
+        google.maps.event.addListener(marker, 'click', function() {
+          infowindow.setContent(place.name);
+          infowindow.open(map, this);
+        });
+      }
+    </script>
+  </head>
+  <body>
+    <div id="map"></div>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWeygUtLrHpnSgdG-fJFvq-7Ja6p85r7w&libraries=places&callback=initMap" async defer></script>
+  </body>
+</html>

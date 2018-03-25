@@ -143,7 +143,7 @@ $results = $db->query('SELECT * from tab3;');
   <body>
     <div id="map" style="width:75em;height:37em;"></div>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWeygUtLrHpnSgdG-fJFvq-7Ja6p85r7w&libraries=places&callback=initMap" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=ENTERGOOGLEKEYw&libraries=places&callback=initMap" async defer></script>
     
 	<button input class="button button-primary" onclick="myFunction()"><a style="color:white" href="final.php" title="Confirmation">CHECK IN</a></button>
   </body>

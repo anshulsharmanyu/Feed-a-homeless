@@ -21,6 +21,6 @@ handlers:
   script: \1
 
 env_variables:
-  MYSQL_DSN: mysql:unix_socket=/cloudsql/test-199006:us-central1:testing;dbname=db
-  MYSQL_USER: root
-  MYSQL_PASSWORD: 'root'
+  MYSQL_DSN: 'enter mysql dsn'
+  MYSQL_USER: 'enter user name'
+  MYSQL_PASSWORD: 'enter user password'
